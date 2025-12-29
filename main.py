@@ -1,6 +1,7 @@
 from crawler.crawler import WebCrawler
 from scanners.sqli import SQLiScanner
 from scanners.xss import XSSScanner
+from scanners.csrf import CSRFScanner
 
 if __name__ == "__main__":
     target = "http://testphp.vulnweb.com/"
@@ -31,6 +32,10 @@ if __name__ == "__main__":
     xss = XSSScanner(crawler.visited_urls, crawler.found_forms)
     xss_results = xss.scan()
 
+    print("\n[+] Starting CSRF scan...")
+    csrf = CSRFScanner(crawler.found_forms)
+    csrf_results = csrf.scan()
+
     print("\n[+] Vulnerabilities Found:")
-    for v in sqli_results + xss_results:
+    for v in sqli_results + xss_results + csrf_results:
         print(v)
