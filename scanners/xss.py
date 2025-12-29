@@ -62,7 +62,7 @@ class XSSScanner:
                         "location": form["action"],
                         "method": form["method"].upper()
                     })
-                    print("f[!] XSS detected in form: {form['action']}")
+                    print(f"[!] XSS detected in form: {form['action']}")
 
             except requests.RequestException:
                 continue
