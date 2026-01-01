@@ -3,9 +3,10 @@ from scanners.sqli import SQLiScanner
 from scanners.xss import XSSScanner
 from scanners.csrf import CSRFScanner
 from scanners.open_dirs import OpenDirectoryScanner
+from reports.reports_html import HTMLReport
 
 if __name__ == "__main__":
-    target = "http://testphp.vulnweb.com/"
+    target = "https://facebook.com"
 
     crawler = WebCrawler(target)
     crawler.crawl(target)
@@ -41,6 +42,7 @@ if __name__ == "__main__":
     open_dir = OpenDirectoryScanner(target)
     open_dir_results = open_dir.scan()
 
-    print("\n[+] Vulnerabilities Found:")
-    for v in sqli_results + xss_results + csrf_results + open_dir_results:
-        print(v)
+    all_vulns = sqli_results + xss_results + csrf_results + open_dir_results
+
+    report = HTMLReport(target, all_vulns)
+    report.generate()
